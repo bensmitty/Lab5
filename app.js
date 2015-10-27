@@ -9,6 +9,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 //DB Products
 var dbProducts = require('./dbProducts.js');
+var dbRatings = require('./dbRatings.js');
 
 var app = express();
 
@@ -128,6 +129,22 @@ router.route('/products/:product_id')
         });
     });
     */
+
+router.route('/ratings/:product_id')
+    .get(function (req, res) {
+        dbRatings.getRating(req.params['product_id'], function (err, data)
+        {
+            if (data) {
+                res.json({
+                    status: '200',
+                    item: data
+                });
+            }
+            else {
+                res.json(404, {status: err});
+            }
+        });
+    });
 
 
 // Register routes
