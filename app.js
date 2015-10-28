@@ -130,6 +130,50 @@ router.route('/products/:product_id')
     });
     */
 
+router.route('/ratings')
+    .delete(function (req, res) {
+        dbRatings.deleteRating(req.body, function (err, data)
+        {
+            if (data) {
+                res.json({
+                    status: '200'
+                });
+            }
+            else {
+                res.json(404, {status: err});
+            }
+        });
+    })
+
+    .post(function (req, res) {
+        dbRatings.insertRating(req.body, function (err, data)
+        {
+            if (data) {
+                res.json({
+                    status: '200'
+                });
+            }
+            else {
+                res.json(404, {status: err});
+            }
+        });
+    })
+
+    .put(function (req, res){
+        dbRatings.updateRating(req.body, function (err, data)
+        {
+            if (data) {
+                res.json({
+                    status: '200'
+                });
+            }
+            else {
+                res.json(404, {status: err});
+            }
+        });
+    })
+
+
 router.route('/ratings/:product_id')
     .get(function (req, res) {
         dbRatings.getRating(req.params['product_id'], function (err, data)
@@ -140,7 +184,8 @@ router.route('/ratings/:product_id')
                     item: data
                 });
             }
-            else {
+            else
+            {
                 res.json(404, {status: err});
             }
         });
