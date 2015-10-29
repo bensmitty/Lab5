@@ -34,10 +34,10 @@ var deleteProduct = function deleteProduct(product_id, callback) {
         // Use the connection
         connection.query('DELETE FROM PRODUCTS WHERE ?', get, function (err, results) {
             if (!err) {
-                if (results != null) {
+                if (results.affectedRows > 0) {
                     callback(null, results);
                 } else {
-                    callback(err, null);
+                    callback("Product not found", null);
                 }
             } else {
                 callback(err, null);
@@ -97,10 +97,10 @@ var updateProduct = function updateProduct(data, callback) {
         // Use the connection
         connection.query('UPDATE products SET price='+data.price+' WHERE id='+data.product_id, function (err, results) {
             if (!err) {
-                if (results != null) {
+                if (results.affectedRows > 0) {
                     callback(null, results);
                 } else {
-                    callback(err, null);
+                    callback("Product id not found", null);
                 }
             } else {
                 callback(err, null);
